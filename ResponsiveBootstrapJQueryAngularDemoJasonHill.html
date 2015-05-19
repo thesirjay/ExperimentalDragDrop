@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>Drag and Drop ordered items</title>
+<meta name="generator" content="Bootply" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
+	type="text/css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+          <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+<link
+	href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+	type="text/css" rel="stylesheet">
+
+
+<style type="text/css">
+.lvl-over {
+	border: 2px dashed #500 !important;
+}
+
+button[disabled], button.disabled {
+	color: #999;
+	background: #DDD;
+	border: 1px solid #CCC;
+}
+
+.unmovable {
+	color: #555;
+	disabled: true;
+	opacity: 8;
+	background: #DDD;
+	border: 1px solid #CCC;
+	visibility: 'hidden';
+	draggable: false;
+	cursor: no-drop;
+}
+
+.lvl-target {
+	background-color: #ddd;
+	opacity: .8;
+}
+
+[draggable] {
+	cursor: move;
+}
+</style>
+
+	<!--  modal content -->
+	<div id="myModal" class="modal fade" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+				</div>
+				<div class="modal-body" id="myModalBody">
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	
+
+</head>
+
+
+
+<body>
+
+	<hr>
+	<div class="container-fluid" ng-app="myApp">
+		<div class="container" ng-controller="ctrlDualList">
+			<div class="row">
+
+
+				<div class="col-md-12 text-center no-drop" id="questionHeader">
+					<h3></h3>
+				</div>
+				<div class="col-sm-4 col-sm-offset-1">
+					<div class="list-group no-drop" id="list1" x-lvl-drop-target="false">
+						<a href="javascript:;" class="list-group-item active no-drop"
+							id="fromHeader"> <input title="Toggle all"
+							ng-click="toggleA()" ng-model="toggle" value="{{toggle}}"
+							type="checkbox" class="pull-right" style="display: none"></a>
+						<span ng-repeat="question in listA"> <a href="javascript:;"
+							data-id="{{question.id}}" x-lvl-draggable="false"
+							class="list-group-item no-drop">{{question.questionText}} <input
+								id="{{question.id}}" ng-click="selectedA.push(question.id)"
+								name="selectedA[]" value="{{question.id}}"
+								ng-checked="selectedA.indexOf(question.id) > -1" type="checkbox"
+								class="pull-right no-drop" style="display: none">
+						</a>
+						</span>
+					</div>
+				</div>
+				<!--/col-4-->
+				<div class="col-md-2 v-center text-center">
+					<button disabled="true" onclick="checkAnswer()" id="btnCheckAnswer">Check
+						Answer</button><p></p>
+						
+					<button onclick="restartQuestion()" id="btnRestartQuestion">Restart Question</button>
+					
+
+				</div>
+				<!--/col-2-->
+				<div class="col-sm-4">
+					<div class="list-group" id="list2" x-lvl-drop-target="true"
+						x-on-drop="drop(dragEl, dropEl, orderDropA)">
+						<a href="javascript:;" class="list-group-item active"
+							id="toHeader"> <input title="Toggle all" ng-click="toggleB()"
+							ng-model="toggle" value="{{toggle}}" type="checkbox"
+							class="pull-right" style="display: none">
+						</a> <span ng-repeat="question in listB"> <a
+							href="javascript:;" data-id="{{question.id}}"
+							class="list-group-item droppable" x-lvl-draggable="true">{{question.questionText}}
+								<input id="{{question.id}}"
+								ng-click="selectedB.push(question.id)" name="selectedB[]"
+								value="{{question.id}}"
+								ng-checked="selectedB.indexOf(question.id) > -1" type="checkbox"
+								class="pull-right" style="display: none">
+						</a>
+						</span>
+					</div>
+				</div>
+				<!--/col-4-->
+			</div>
+			<!--/row-->
+		</div>
+		<!--/container-->
+
+		<hr>
+
+	</div>
+	<!--/container-fluid-->
+
+
+	<script type='text/javascript'
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
+	<script type='text/javascript'
+		src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+
+
+	<script type='text/javascript'
+		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
+
+
+	<script type='text/javascript' src="js/custom.js"></script>
+        
+</body>
+</html>
